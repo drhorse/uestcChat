@@ -1,4 +1,4 @@
-# uestcChat
+# UESTC-Chat
 
 > Chat server for UESTC C++ class
 
@@ -6,7 +6,7 @@
 
 This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
 
-## Getting Started
+## To Run on Your Own Server
 
 Getting up and running is as easy as 1, 2, 3.
 
