@@ -110,3 +110,7 @@ $RECYCLE.BIN/
 # Others
 lib/
 data/
+
+# configs
+config/development.json
+config/production.json
