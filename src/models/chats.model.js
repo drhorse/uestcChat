@@ -6,6 +6,8 @@ module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient')
   const chats = sequelizeClient.define('chats', {
     message: { type: Sequelize.STRING, allowNull: false }
+  }, {
+    updatedAt: false,   
   })
 
   chats.associate = function (models) { 

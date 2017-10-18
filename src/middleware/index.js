@@ -3,4 +3,4 @@ module.exports = function () {
   // in Express the order matters, `notFound` and
   // the error handler have to go last.
   const app = this // eslint-disable-line no-unused-vars
-};
+}
