@@ -5,7 +5,7 @@ const Sequelize = require('sequelize')
 module.exports = function (app) {
   const sequelizeClient = app.get('sequelizeClient')
   const users = sequelizeClient.define('users', {  
-    username: { type: Sequelize.STRING, allowNull: true, unique: true },
+    username: { type: Sequelize.STRING(191), allowNull: true, unique: true },
     password: { type: Sequelize.STRING, allowNull: true },
   })
 
