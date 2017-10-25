@@ -16,10 +16,11 @@ const userSchema = {
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    //    all: [ authenticate('jwt') ],
+    all: [],
     find: [],
     get: [],
-    create: [ associateCurrentUser({ idField: 'id', as: 'authorId' }) ],
+    create: [ authenticate('jwt'), associateCurrentUser({ idField: 'id', as: 'authorId' }) ],
     update: [ disallow('external') ],
     patch: [ disallow('external') ],
     remove: [ disallow('external') ]
