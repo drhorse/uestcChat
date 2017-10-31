@@ -11,8 +11,7 @@ const restrict = [
 module.exports = {
   before: {
     all: [],
-    //    find: [ authenticate('jwt') ],
-    find: [],
+    find: [ authenticate('jwt') ],
     get: [ ...restrict ],
     create: [ hashPassword() ],
     update: [ ...restrict, hashPassword() ],
