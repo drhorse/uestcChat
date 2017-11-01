@@ -1,13 +1,19 @@
+const rp = require('request-promise-native')
+
 module.exports = function () {
   const app = this
-  const authentication = app.service('authentication')
 
   app.use('/login', {
     find(data) {
-      return authentication.create({ 
-        strategy: 'local', 
-        username: data.query.username, 
-        password: data.query.password 
+      return rp({
+        method: 'POST',
+        uri: 'http://chat.shijibaina.com/authentication',
+        body: {
+          strategy: 'local', 
+          username: data.headers.username, 
+          password: data.headers.password 
+        },
+        json: true
       })
     }
   })
