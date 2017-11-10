@@ -47,7 +47,7 @@ plan.remote(function(remote) {
   remote.sudo('cp -R /tmp/' + tmpDir + ' ~/', {user: username})
   remote.rm('-rf /tmp/' + tmpDir)
   remote.log('Install dependencies')
-  remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username})
+  remote.sudo('npm --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username})
   remote.log('Reload application')
   remote.sudo('ln -snf ~/' + tmpDir + ' ~/' + appName, {user: username})
   remote.sudo('pm2 delete ' + appName, {user: username, failsafe: true})
