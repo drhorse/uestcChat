@@ -1,6 +1,5 @@
 // To use: fly production
-
-const plan = require('flightplan')
+const plan = require('flightplan') // https://github.com/pstadler/flightplan
 
 const url        = 'shijibaina.com'
 const appName    = 'uestcchat'
@@ -45,10 +44,12 @@ plan.local(function(local) {
 
 plan.remote(function(remote) {
   remote.log('Server side')
-  remote.exec('cp -R /tmp/' + tmpDir + ' ~/', {user: username})
+  remote.sudo('cp -R /tmp/' + tmpDir + ' ~/', {user: username})
   remote.rm('-rf /tmp/' + tmpDir)
-  remote.exec('npm --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username})
-  remote.exec('ln -snf ~/' + tmpDir + ' ~/' + appName, {user: username})
-  remote.exec('pm2 delete ' + appName, {user: username, failsafe: true})
-  remote.exec('cd ~/' + appName + ';pm2 start ' + configFile, {user: username})
+  remote.log('Install dependencies')
+  remote.sudo('npm --production --prefix ~/' + tmpDir + ' install ~/' + tmpDir, {user: username})
+  remote.log('Reload application')
+  remote.sudo('ln -snf ~/' + tmpDir + ' ~/' + appName, {user: username})
+  remote.sudo('pm2 delete ' + appName, {user: username, failsafe: true})
+  remote.sudo('cd ~/' + appName + ';pm2 start ' + configFile, {user: username})
 })
