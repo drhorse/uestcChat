@@ -1,29 +1,45 @@
 // To use: fly production
 
-/*global process*/
-var plan = require('flightplan')
+const plan = require('flightplan')
 
-var url = 'webuy-china.com'
-var appName = 'uestcchat'
-var configFile = '../uestcchat.config.js'
-var username = 'root'
-var rsaKey = '/Users/jeff/.ssh/id_rsa'
-const now = new Date()
-var tmpDir = appName + '-' + now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate() + '-' + now.getHours() 
-           + '-' + now.getMinutes() + '-' + now.getSeconds() + '-' + now.getMilliseconds()
+const url        = 'shijibaina.com'
+const appName    = 'uestcchat'
+const configFile = '../uestcchat.config.js'
+const username   = 'deploy'
+const rsaKey     = '/Users/jeff/.ssh/id_rsa'
 
-plan.target('production', [
-  {
-    host: url,
-    username: username,
-    privateKey: rsaKey,
-    agent: process.env.SSH_AUTH_SOCK
-  }
-])
+const formatNumber = n => {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+const formatTime = () => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  const day = now.getDate()
+  const hour = now.getHours()
+  const minute = now.getMinutes()
+  const second = now.getSeconds()
+  const ms = now.getMilliseconds()
+  return [year, month, day].map(formatNumber).join('_') 
+    + '-' 
+    + [hour, minute, second].map(formatNumber).join(':')
+    + '-' + ms
+}
+
+const tmpDir = appName + '-' + formatTime()
+
+plan.target('production', [{
+  host: url,
+  username: username,
+  privateKey: rsaKey,
+  agent: process.env.SSH_AUTH_SOCK
+}])
 
 plan.local(function(local) {
   local.log('Local side')
-  var filesToCopy = local.exec('git ls-files', {silent: true})
+  const filesToCopy = local.exec('git ls-files', {silent: true})
   local.transfer(filesToCopy, '/tmp/' + tmpDir)
 })
 
