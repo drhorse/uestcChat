@@ -2,7 +2,7 @@ const hooks = require('./passwd.hooks')
 
 module.exports = function () {
   const app = this
-  const users = app.get('users')
+  const users = app.service('users')
 
   app.use('/passwd', {
     find(data) {
