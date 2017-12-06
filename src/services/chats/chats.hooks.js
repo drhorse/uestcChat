@@ -16,8 +16,8 @@ const userSchema = {
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
-    find: [],
+    all: [],
+    find: [ authenticate('jwt') ],
     get: [],
     create: [ associateCurrentUser({ idField: 'id', as: 'authorId' }) ],
     update: [ disallow('external') ],
